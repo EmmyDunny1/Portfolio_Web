@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Frontend Developer — Growth-Focused Websites</title>
+  <meta name="description" content="Frontend Developer building conversion-driven websites for business growth. It's not just about the codes, it's about customer satisfaction." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Particle Canvas -->
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <!-- Page wrapper for safe layout (so fixed header doesn't overlap) -->
+  <div class="page-wrap">
+    <!-- Header -->
+    <header class="site-header" id="header">
+      <div class="brand">
+        <a href="#home" class="brand-link" aria-label="Go to home">
+          <strong>FrontStudio</strong>
+          <span class="tag">Professional Frontend • Growth</span>
+        </a>
+      </div>
+
+      <!-- Desktop nav -->
+      <nav class="nav-main" id="nav" aria-label="Primary navigation">
+        <ul>
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#services" class="nav-link">Services</a></li>
+          <li><a href="#projects" class="nav-link">Work</a></li>
+          <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+          <li><a href="#contact" class="nav-link cta">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Mobile toggle -->
+      <button id="menuBtn" class="menu-btn" aria-expanded="false" aria-controls="mobileMenu" aria-label="Open menu">
+        <svg class="hamb" width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
+          <g stroke="none" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect class="bar bar1" x="12" y="14" width="24" height="2" rx="1" />
+            <rect class="bar bar2" x="12" y="23" width="24" height="2" rx="1" />
+            <rect class="bar bar3" x="12" y="32" width="24" height="2" rx="1" />
+          </g>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Mobile full-screen menu -->
+    <div id="mobileMenu" class="mobile-menu" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="mobile-menu-inner">
+        <button id="closeMobile" class="close-mobile" aria-label="Close menu">&times;</button>
+        <ul class="mobile-links">
+          <li><a href="#home" class="mobile-link">Home</a></li>
+          <li><a href="#about" class="mobile-link">About</a></li>
+          <li><a href="#services" class="mobile-link">Services</a></li>
+          <li><a href="#projects" class="mobile-link">Work</a></li>
+          <li><a href="#testimonials" class="mobile-link">Testimonials</a></li>
+          <li><a href="#contact" class="mobile-link">Contact</a></li>
+        </ul>
+        <div class="mobile-footer">
+          <p class="motto">“It's not just about the codes, it's about customer satisfaction.”</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main -->
+    <main id="main">
+      <!-- Hero -->
+      <section class="hero" id="home">
+        <div class="hero-inner container">
+          <div class="hero-content">
+            <h1>Hi, I'm <span class="accent">Your Name</span> — Frontend Developer</h1>
+            <p class="lead">
+              I build conversion-first websites and web apps that scale — tailored to businesses that want measurable growth.
+            </p>
+            <p class="motto-hero">It's not just about the codes, it's about customer satisfaction.</p>
+            <div class="hero-actions">
+              <a class="btn primary" href="#projects">See Work</a>
+              <a class="btn ghost" href="#contact">Start a Project</a>
+            </div>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-num">8+</span>
+              <span class="stat-label">Years building web products</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">50+</span>
+              <span class="stat-label">Sites launched for businesses</span>
+            </div>
+            <div class="stat">
+              <span class="stat-num">30%</span>
+              <span class="stat-label">Avg. conversion uplift</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section class="about section" id="about">
+        <div class="container about-grid">
+          <div class="about-text">
+            <h2>About — I craft high-impact frontends for growth</h2>
+            <p>I blend beautiful interfaces, performance engineering and product thinking to deliver websites that convert. Whether it's redesigning a landing funnel, building a progressive web app, or shipping accessible, SEO-friendly markup — I focus on outcomes: more leads, more sales, less friction.</p>
+
+            <ul class="about-list">
+              <li><strong>Approach:</strong> Strategy-first, component-driven, measurable.</li>
+              <li><strong>Stack:</strong> Modern HTML/CSS/JS, React/Vite, TypeScript, Tailwind when appropriate.</li>
+              <li><strong>Outcome:</strong> Business-facing features, reliable performance, delightful UX.</li>
+            </ul>
+
+            <a class="btn primary" href="#services">How I Help</a>
+          </div>
+
+          <figure class="about-image" aria-hidden="false">
+            <!-- Placeholder hero portrait as inline SVG with dramatic animation.
+                 Replace with <img src="your-photo.jpg" alt="Your Name"> if you have a real photo.
+                 If you use a photo, add class "photo-epic" to get the same animation. -->
+            <svg class="portrait" viewBox="0 0 400 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Portrait illustration">
+              <defs>
+                <linearGradient id="g1" x1="0" x2="1">
+                  <stop offset="0" stop-color="#ff4da6"/>
+                  <stop offset="1" stop-color="#ff1493"/>
+                </linearGradient>
+                <filter id="grain">
+                  <feTurbulence baseFrequency="0.85" seed="3" numOctaves="2" result="noise"/>
+                  <feColorMatrix type="saturate" values="0" />
+                  <feBlend in="SourceGraphic" in2="noise" mode="overlay"/>
+                </filter>
+              </defs>
+
+              <g class="portrait-wrap">
+                <rect x="0" y="0" width="400" height="520" rx="20" fill="url(#g1)" />
+                <g class="face" transform="translate(40,40)">
+                  <!-- stylized developer figure -->
+                  <ellipse cx="160" cy="210" rx="70" ry="90" fill="#fff" opacity="0.12"/>
+                  <circle cx="160" cy="170" r="56" fill="#fff" opacity="0.18"/>
+                  <rect x="110" y="260" width="100" height="120" rx="12" fill="#ffffff10"/>
+                  <path d="M70,420 C120,360 200,360 330,420" stroke="#fff4" stroke-width="4" fill="none"/>
+                  <!-- code brackets motif -->
+                  <text x="28" y="420" fill="#fff6" font-family="monospace" font-size="48" opacity="0.6">&#123;</text>
+                  <text x="308" y="420" fill="#fff6" font-family="monospace" font-size="48" opacity="0.6">&#125;</text>
+                </g>
+              </g>
+            </svg>
+            <figcaption class="caption">Professional Frontend • UX & Performance</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- Services -->
+      <section class="services section" id="services">
+        <div class="container">
+          <h2>Services — From discovery to measurable growth</h2>
+          <div class="services-grid">
+            <article class="service-card">
+              <h3>Growth-Focused Landing Pages</h3>
+              <p>Design + build landing experiences that reduce friction, increase signups, and A/B test quickly to improve conversions.</p>
+            </article>
+
+            <article class="service-card">
+              <h3>Web App Frontends</h3>
+              <p>Robust component architecture, fast hydration, accessibility-first, and solid state/data patterns for maintainable apps.</p>
+            </article>
+
+            <article class="service-card">
+              <h3>Performance & SEO</h3>
+              <p>Improve Core Web Vitals, optimize critical rendering path, and ship semantic markup that search engines and users trust.</p>
+            </article>
+
+            <article class="service-card">
+              <h3>Consulting & Team Enablement</h3>
+              <p>Train teams on modern front-end practices, component design systems, and build processes that scale.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section class="projects section" id="projects">
+        <div class="container">
+          <h2>Selected Work — Real results for businesses</h2>
+
+          <div class="project-list">
+            <article class="project">
+              <div class="project-meta">
+                <h3>Conversion-First Redesign for Retailer</h3>
+                <p class="kicker">Increased checkout completion by 26% in 3 months.</p>
+              </div>
+              <p>Led UX audit, coded a modular frontend, and implemented an optimized checkout flow. Results measured with analytics and heatmaps.</p>
+            </article>
+
+            <article class="project">
+              <div class="project-meta">
+                <h3>SaaS Landing + Onboarding</h3>
+                <p class="kicker">Improved trial-to-paid conversion by 18%.</p>
+              </div>
+              <p>Built a performant marketing site and integrated onboarding flows to reduce time-to-value for new users.</p>
+            </article>
+
+            <article class="project">
+              <div class="project-meta">
+                <h3>Progressive web app for services</h3>
+                <p class="kicker">Offline-ready booking, 4.8/5 user rating.</p>
+              </div>
+              <p>Implemented PWA principles, service workers, and accessible forms to power an improved mobile experience for customers.</p>
+            </article>
+          </div>
+
+          <div class="projects-cta">
+            <a class="btn primary" href="#contact">Let's Talk Results</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Testimonials -->
+      <section class="testimonials section" id="testimonials">
+        <div class="container">
+          <h2>What clients say</h2>
+          <div class="test-grid">
+            <blockquote class="testimonial">
+              <p>“Delivered a beautiful, high-performing site — our lead quality improved immediately. Communication was exceptional.”</p>
+              <footer>— CEO, Boutique Retail</footer>
+            </blockquote>
+
+            <blockquote class="testimonial">
+              <p>“Turned complex product requirements into an intuitive interface. Fast delivery and measurable results.”</p>
+              <footer>— Head of Product, Fintech</footer>
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section class="contact section" id="contact">
+        <div class="container contact-grid">
+          <div>
+            <h2>Let’s build something that grows your business</h2>
+            <p>Available for freelance and contract work. I focus on practical product results: performance, accessibility, and measurable conversion improvements.</p>
+            <ul class="contact-list">
+              <li><strong>Email:</strong> <a href="mailto:hello@frontstudio.dev">hello@frontstudio.dev</a></li>
+              <li><strong>Availability:</strong> 10–20 hours / week (flexible)</li>
+            </ul>
+            <a class="btn primary" href="mailto:hello@frontstudio.dev?subject=Project%20Inquiry">Start a Conversation</a>
+          </div>
+
+          <form class="contact-form" action="#" method="post" onsubmit="return false;" aria-label="Contact form">
+            <label>
+              <span>Name</span>
+              <input type="text" name="name" required placeholder="Your name" />
+            </label>
+
+            <label>
+              <span>Email</span>
+              <input type="email" name="email" required placeholder="you@company.com" />
+            </label>
+
+            <label>
+              <span>Project brief</span>
+              <textarea name="message" rows="5" placeholder="Short description of your needs"></textarea>
+            </label>
+
+            <div class="form-actions">
+              <button class="btn primary" type="submit">Send message</button>
+              <button class="btn ghost" type="reset">Reset</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="site-footer">
+        <div class="container footer-grid">
+          <div>&copy; <span id="year"></span> FrontStudio — Frontend for Growth</div>
+          <div class="footer-links">
+            <a href="#privacy">Privacy</a> · <a href="#terms">Terms</a> · <a href="#contact">Contact</a>
+          </div>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
