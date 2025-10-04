@@ -98,19 +98,21 @@ body{
 .hamb .bar{fill:var(--muted); transition:transform 420ms var(--ease), opacity 320ms var(--ease)}
 
 /* ---------- Mobile Menu (full screen overlay) ---------- */
-.mobile-menu{
-  position:fixed;
-  inset:0;
-  z-index:60;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background: radial-gradient(ellipse at center, rgba(255,77,166,0.08) 0%, rgba(190,11,107,0.18) 40%, rgba(0,0,0,0.) 70%);
-  transform: scale(0.95) translateY(10%) ;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 360ms var(--ease), transform 420ms var(--ease);
+/* Mobile Menu Overlay - deeper */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(34, 0, 24, 0.96); /* darker overlay */
+  backdrop-filter: blur(6px);
+  color: #fff;
+  z-index: 2000;
+  transform: translateX(100%);
+  transition: transform 0.4s ease;
 }
+
 .mobile-menu[aria-hidden="false"]{
   opacity:1;
   pointer-events:auto;
@@ -234,4 +236,82 @@ body{
   .hero-stats{display:none}
   .mobile-menu-inner{padding:1rem}
   .portrait{max-width:300px}
+}
+
+
+/* Projects grid */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.project-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+}
+
+.project-card img {
+  width: 100%;
+  display: block;
+}
+
+.project-content {
+  padding: 1.5rem;
+  color: #333;
+}
+
+.project-content h3 {
+  margin-top: 0;
+  margin-bottom: .5rem;
+  color: #d6006c;
+}
+
+.project-content .kicker {
+  font-weight: bold;
+  color: #444;
+  margin-bottom: .5rem;
+}
+
+/* Tech Stacks */
+.stacks {
+  background: #33001f;
+  color: #ffe6f2;
+  padding: 5rem 0;
+  text-align: center;
+}
+
+.stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.stack img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: .5rem;
+}
+
+.stack:hover {
+  transform: scale(1.15);
+}
+
+.stack span {
+  font-size: 0.9rem;
 }
