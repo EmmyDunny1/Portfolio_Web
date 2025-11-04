@@ -382,7 +382,7 @@ const $$ = (sel) => Array.from(document.querySelectorAll(sel));
         (response) => {
           showFormMessage(
             form,
-            "Message sent successfully — thank you!",
+            "Message sent successfully, thank you!",
             "success",
           );
           form.reset();
