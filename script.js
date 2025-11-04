@@ -158,7 +158,7 @@ const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 })();
 
 /* ---------- small UX helpers ---------- */
-() => {
+(() => {
   // year in footer
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
@@ -176,37 +176,131 @@ const $$ = (sel) => Array.from(document.querySelectorAll(sel));
       navLinks[current].classList.add("active");
   });
 
-  // Form stub - show a small confirmation (no backend)
-  // Initialize EmailJS
-  (function () {
-    emailjs.init("YOUR_PUBLIC_KEY"); // 🔑 Replace with your actual Public Key from EmailJS
-  })();
+  // -------- EmailJS contact form integration --------
+  // Replace the placeholders below with your EmailJS credentials.
+  // Get these from https://www.emailjs.com/ (Service ID, Template ID, Public Key)
+  const EMAILJS_SERVICE_ID = "service_dhjq67c"; // e.g. 'service_xxx'
+  const EMAILJS_TEMPLATE_ID = "template_krbzgdh"; // e.g. 'template_xxx'
+  const EMAILJS_PUBLIC_KEY = "5SBsvEKQeyeUXKld7"; // e.g. 'user_xxx' or new public key
+
+  // Safely initialize EmailJS if the SDK is loaded
+  if (window.emailjs && typeof window.emailjs.init === "function") {
+    try {
+      if (EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+      } else {
+        // If user didn't provide a key, don't init — we still allow fallback handling
+        console.warn(
+          "EmailJS public key not set. Replace EMAILJS_PUBLIC_KEY in script.js with your key to enable email sending.",
+        );
+      }
+    } catch (err) {
+      console.error("Failed to initialize EmailJS:", err);
+    }
+  } else {
+    console.warn(
+      "EmailJS SDK not found. Make sure the EmailJS script is loaded before script.js",
+    );
+  }
+
+  // Helper to show inline feedback for form submissions
+  function showFormMessage(form, message, type = "info") {
+    let el = form.querySelector(".form-status");
+    if (!el) {
+      el = document.createElement("div");
+      el.className = "form-status";
+      el.setAttribute("role", "status");
+      el.style.marginTop = "0.75rem";
+      form.appendChild(el);
+    }
+    el.textContent = message;
+    el.style.color = type === "error" ? "#ffb4c6" : "#b8ffec";
+  }
 
   document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("contact-form");
+    if (!form) return;
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
 
-      // Optional: show loading text
       const submitBtn = form.querySelector("button[type='submit']");
-      submitBtn.textContent = "Sending...";
-      submitBtn.disabled = true;
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.dataset.origText = submitBtn.textContent;
+        submitBtn.textContent = "Sending...";
+      }
 
-      emailjs.sendForm("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", this).then(
-        function () {
-          alert("✅ Message sent successfully!");
+      // Basic client-side validation (matches EmailJS template variables)
+      const firstName = form
+        .querySelector('[name="first_name"]')
+        ?.value?.trim();
+      const lastName = form.querySelector('[name="last_name"]')?.value?.trim();
+      const email = form.querySelector('[name="user_email"]')?.value?.trim();
+      const phone = form.querySelector('[name="user_phone"]')?.value?.trim();
+      const message = form.querySelector('[name="message"]')?.value?.trim();
+      if (!firstName || !lastName || !email || !message) {
+        showFormMessage(
+          form,
+          "Please fill in your first name, last name, email and message.",
+          "error",
+        );
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = submitBtn.dataset.origText || "Send message";
+        }
+        return;
+      }
+
+      // If EmailJS isn't configured, show a helpful message and bail
+      if (
+        !window.emailjs ||
+        !EMAILJS_SERVICE_ID ||
+        !EMAILJS_TEMPLATE_ID ||
+        EMAILJS_SERVICE_ID === "YOUR_SERVICE_ID" ||
+        EMAILJS_TEMPLATE_ID === "YOUR_TEMPLATE_ID"
+      ) {
+        showFormMessage(
+          form,
+          "Email sending is not configured. Please update the EmailJS service/template IDs in script.js.",
+          "error",
+        );
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = submitBtn.dataset.origText || "Send message";
+        }
+        return;
+      }
+
+      // Send the form using EmailJS
+      emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form).then(
+        (response) => {
+          showFormMessage(
+            form,
+            "Message sent successfully — thank you!",
+            "success",
+          );
           form.reset();
-          submitBtn.textContent = "Send message";
-          submitBtn.disabled = false;
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent =
+              submitBtn.dataset.origText || "Send message";
+          }
         },
-        function (error) {
-          alert("❌ Failed to send message. Please try again.");
-          console.error("EmailJS error:", error);
-          submitBtn.textContent = "Send message";
-          submitBtn.disabled = false;
+        (err) => {
+          console.error("EmailJS error:", err);
+          showFormMessage(
+            form,
+            "Failed to send message. Try again later.",
+            "error",
+          );
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent =
+              submitBtn.dataset.origText || "Send message";
+          }
         },
       );
     });
-  })();
-};
+  });
+})();

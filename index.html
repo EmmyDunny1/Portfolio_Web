@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Frontend Developer — Growth-Focused Websites</title>
   <meta name="description" content="Frontend Developer building conversion-driven websites for business growth. It's not just about the codes, it's about customer satisfaction." />
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -48,7 +49,18 @@
     <!-- Mobile full-screen menu -->
     <div id="mobileMenu" class="mobile-menu" role="dialog" aria-modal="true" aria-hidden="true">
       <div class="mobile-menu-inner">
-        <button id="closeMobile" class="close-mobile" aria-label="Close menu">&times;</button>
+        <!-- top header area inside mobile menu: matches site header background and positioning -->
+        <div class="mobile-panel-header">
+          <a href="#home" class="brand-link mobile-brand" aria-label="Go to home">
+            <strong>Oluwadunsin Akinbo</strong>
+          </a>
+          <button id="closeMobile" class="close-mobile" aria-label="Close menu">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+              <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
         <ul class="mobile-links">
           <li><a href="#home" class="mobile-link">Home</a></li>
           <li><a href="#about" class="mobile-link">About</a></li>
@@ -103,19 +115,20 @@
         <div class="container about-grid">
           <div class="about-text">
 
-            <div style=" margin-left: auto; margin-right: auto; border-bottom: 2px solid rgb(159, 16, 40); width: 100px;"><h2 style="font-size:xx-large; text-align: center;">About</h2></div>
+            <div style=" margin-left: auto; margin-right: auto; border-bottom: 2px solid rgb(159, 16, 40); width: 100px;"><h2 style="font-size:xx-large; text-align: center;">ABOUT</h2></div>
             
             
-            <h2>How It All Started</h2>
-        
-            <p style="text-justify:distribute-all-lines;">I’ve always been fascinated by how things work from the gears inside machines to the logic behind the code that powers our digital world. My journey started in Mechanical Engineering, where I learned to think like a builder to see problems not as obstacles, but as puzzles waiting to be solved. Engineering taught me precision, patience, and the beauty of structure.
+            
+        <br>
+            <p style="text-justify: distribute;">I’ve always been fascinated by how things work from the gears inside machines to the logic behind the code that powers our digital world. My journey started in Mechanical Engineering, where I learned to think like a builder to see problems not as obstacles, but as puzzles waiting to be solved. Engineering taught me precision, patience, and the beauty of structure.
 
-That curiosity eventually led me into the world of Computer Essentials and Engineering, where I began to see technology not just as tools, but as a bridge connecting creativity and function, people and purpose. It was there that I discovered something that completely changed my path: Frontend Development.
+That curiosity eventually led me into the world of Computer Essentials and Engineering, where I began to see technology not just as tools, but as a bridge connecting creativity and function, people and purpose. It was there that I discovered something that completely changed my path: Frontend Development. <br>
 
 Building interfaces felt like a natural evolution of my engineering mindset still solving problems, still crafting systems, but now creating experiences that people could actually feel and interact with. Today, I channel that same curiosity and craftsmanship into designing and developing clean, responsive, and meaningful digital experiences that make users feel at home the moment they land on a page.
+<br>
 
 Every project I take on is more than just code to me, it’s a reflection of my growth, my standards, and my commitment to delivering top-notch, thoughtful, and user-focused work. I believe great design doesn’t just look good, it feels right.</p>
-<h2>And Now</h2>
+
             <p>I blend beautiful interfaces, performance engineering and product thinking to deliver websites that convert. Whether it's redesigning a landing funnel, building a progressive web app, or building SEO-friendly markup. I focus on outcomes: more leads, more sales, less friction.</p>
 
         
@@ -140,32 +153,34 @@ Every project I take on is more than just code to me, it’s a reflection of my 
        <!-- Projects -->
       <section class="projects section" id="projects">
         <div class="container">
-          <h2>Selected Work — Real results for businesses</h2>
+          <div class="section-title">
+            <h2 style=" padding-bottom: 5px; border-bottom: 2px solid rgb(159, 16, 40); width: 180px; ">MY WORK</h2></div>
           <div class="project-grid">
-            <a href="#" class="project-card">
-              <img src="/images/retirement.png" alt="retirement" />
+            <a href="https://pastor-oluwole-akinbo.vercel.app/" target="_blank" class="project-card" style='text-decoration: none;'>
+              <img src="images/retirement.png" alt="retirement" />
+            
               <div class="project-content">
-                <h3>Conversion-First Redesign for Retailer</h3>
-                <p class="kicker">Checkout completion ↑26% in 3 months</p>
-                <p>UX audit, modular frontend, optimized checkout flow. Results tracked with analytics + heatmaps.</p>
+               
+                <p class="kicker">A responsive multi-page Next.js app styled with Tailwind CSS and optimized for rich media featuring image galleries, testimonies, book launches, and a retirement service event. Built with React, leveraging Next.js routing, image optimization, and deployed via Render.com for seamless hosting and CI/CD.</p>
+               
               </div>
             </a>
-            <article class="project-card">
+            <a href="http://hiscomingevangelicalchurch.org/" class="project-card">
               <img src="images/HCEC-Website.png" alt="HCEC-Website" />
               <div class="project-content">
-                <h3>SaaS Landing + Onboarding</h3>
-                <p class="kicker">Trial-to-paid conversion ↑18%</p>
-                <p>High-performance marketing site with integrated onboarding flows, reducing time-to-value for new users.</p>
-              </div>
-            </article>
-            <article class="project-card">
-              <img src="https://picsum.photos/600/360?random=12" alt="PWA booking app" />
+                <p class="kicker">A fully responsive Next.js app for His Coming Evangelical Church, blending modern web performance with spiritual connectivity. Developed with React, Tailwind CSS, and hosted on Vercel, the site features dynamic forms, media galleries, and intuitive navigation all designed to uplift and empower online congregational engagement. 
+
+                </p>
+                </div>
+            </a>
+            <a  href="https://spiffy-heliotrope-82af7e.netlify.app/" 
+            class="project-card">
+              <img src="images/Tek.png" alt="Tek" />
               <div class="project-content">
-                <h3>Progressive Web App for Services</h3>
-                <p class="kicker">Offline-ready booking, rated 4.8/5</p>
-                <p>Implemented PWA principles, service workers, and accessible forms for an improved mobile experience.</p>
+
+                <p class="kicker">Developed a fully responsive, multi-page corporate website for a technology solutions provider. Built with React and Tailwind CSS for a modern, scalable front-end architecture and rapid styling. Features include dropdown navigation menus, a split hero section with video/media integration, and a mobile-first responsive design. Deployed on Netlify for secure, fast global delivery with continuous deployment support.</p>
               </div>
-            </article>
+            </a>
           </div>
           <div class="projects-cta">
             <a class="btn primary" href="#contact">Let's Talk Results</a>
@@ -176,14 +191,18 @@ Every project I take on is more than just code to me, it’s a reflection of my 
       <!-- Tech Stacks -->
       <section class="stacks section" id="stacks">
         <div class="container">
-          <h2>Tech Stacks — Tools I use to deliver results</h2>
+          <div style=" margin-left: auto; margin-right: auto; border-bottom: 2px solid rgb(159, 16, 40); width: 250px;"><h2 style="font-size:x-large; text-align: center; padding-bottom: 5px;">MY TECH STACKS</h2></div>
           <div class="stack-grid">
+            <div class="stack"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma"><span>Figma</span></div>
             <div class="stack"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5"><span>HTML5</span></div>
             <div class="stack"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3"><span>CSS3</span></div>
             <div class="stack"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript"><span>JavaScript</span></div>
+            <div class="stack"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind"><span>Tailwind</span></div>
             <div class="stack"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React"><span>React</span></div>
+            <div class="stack"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Nextjs"><span>Nextjs</span></div>
+            
             <div class="stack"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"><span>Git</span></div>
-            <div class="stack"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma"><span>Figma</span></div>
+            
           </div>
         </div>
       </section>
@@ -208,15 +227,28 @@ Every project I take on is more than just code to me, it’s a reflection of my 
       </section> -->
 
       <!-- Contact -->
+      <!-- EmailJS: configure YOUR_SERVICE_ID, YOUR_TEMPLATE_ID and YOUR_PUBLIC_KEY in script.js -->
       <form id="contact-form" class="contact-form" aria-label="Contact form">
-  <label>
-    <span>Name</span>
-    <input type="text" name="user_name" required placeholder="Your name" />
-  </label>
+  <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+    <label style="flex:1; min-width:160px;">
+      <span>First name</span>
+      <input type="text" name="first_name" required placeholder="First name" />
+    </label>
+
+    <label style="flex:1; min-width:160px;">
+      <span>Last name</span>
+      <input type="text" name="last_name" required placeholder="Last name" />
+    </label>
+  </div>
 
   <label>
     <span>Email</span>
     <input type="email" name="user_email" required placeholder="you@company.com" />
+  </label>
+
+  <label>
+    <span>Contact number</span>
+    <input type="tel" name="user_phone" placeholder="+234 800 000 0000" />
   </label>
 
   <label>
@@ -234,7 +266,7 @@ Every project I take on is more than just code to me, it’s a reflection of my 
       <!-- Footer -->
       <footer class="site-footer">
         <div class="container footer-grid">
-          <div>&copy; <span id="year"></span> FrontStudio — Frontend for Growth</div>
+          <div>&copy; <span id="year"></span> Oluwadunsin</div>
           <div class="footer-links">
             <a href="#privacy">Privacy</a> · <a href="#terms">Terms</a> · <a href="#contact">Contact</a>
           </div>
