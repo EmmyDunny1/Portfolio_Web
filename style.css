@@ -354,6 +354,9 @@ body{
   .hero-stats{display:none}
   .mobile-menu-inner{padding:1rem}
   .portrait{max-width:300px}
+  .section-title{
+    margin-right: 50%;
+  }
 }
 
 
@@ -376,8 +379,7 @@ body{
   margin-right: auto;
   width: 250px;
   text-align: center;
-  margin-left: 50%;
-  margin-right: 50%;
+
   
   padding-bottom: 0.6rem; /* space between text and border */
 }

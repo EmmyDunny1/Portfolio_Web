@@ -177,21 +177,27 @@ const $$ = (sel) => Array.from(document.querySelectorAll(sel));
   });
 
   // -------- EmailJS contact form integration --------
-  // Replace the placeholders below with your EmailJS credentials.
-  // Get these from https://www.emailjs.com/ (Service ID, Template ID, Public Key)
-  const EMAILJS_SERVICE_ID = "service_dhjq67c"; // e.g. 'service_xxx'
-  const EMAILJS_TEMPLATE_ID = "template_krbzgdh"; // e.g. 'template_xxx'
-  const EMAILJS_PUBLIC_KEY = "5SBsvEKQeyeUXKld7"; // e.g. 'user_xxx' or new public key
+  // Configuration: replace the three values below with your EmailJS account values.
+  // - Service ID:    looks like 'service_xxxxxx'
+  // - Template ID:   looks like 'template_xxxxxx'
+  // - Public Key:    found in EmailJS Account > API Keys (or the 'user_xxx' legacy key)
+  // Example:
+  //   const EMAILJS_SERVICE_ID = 'service_abcd123';
+  //   const EMAILJS_TEMPLATE_ID = 'template_efgh456';
+  //   const EMAILJS_PUBLIC_KEY = 'publicKeyHere';
+  const EMAILJS_SERVICE_ID = "service_ye7zt3b"; // Replace with your Service ID
+  const EMAILJS_TEMPLATE_ID = "template_krbzgdh"; // Replace with your Template ID
+  const EMAILJS_PUBLIC_KEY = "5SBsvEKQeyeUXKld7"; // Replace with your Public Key
 
-  // Safely initialize EmailJS if the SDK is loaded
+  // Initialize EmailJS if the SDK is available and a public key has been provided.
   if (window.emailjs && typeof window.emailjs.init === "function") {
     try {
       if (EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
         emailjs.init(EMAILJS_PUBLIC_KEY);
       } else {
-        // If user didn't provide a key, don't init — we still allow fallback handling
+        // If no real key is present, log a helpful message but continue (send will be blocked later)
         console.warn(
-          "EmailJS public key not set. Replace EMAILJS_PUBLIC_KEY in script.js with your key to enable email sending.",
+          "EmailJS public key not set. Set EMAILJS_PUBLIC_KEY in script.js to your key to enable email sending.",
         );
       }
     } catch (err) {
@@ -199,7 +205,7 @@ const $$ = (sel) => Array.from(document.querySelectorAll(sel));
     }
   } else {
     console.warn(
-      "EmailJS SDK not found. Make sure the EmailJS script is loaded before script.js",
+      "EmailJS SDK not found. Make sure the EmailJS script (https://cdn.emailjs.com/sdk/3.11.0/email.min.js) is loaded before script.js",
     );
   }
 
@@ -220,6 +226,92 @@ const $$ = (sel) => Array.from(document.querySelectorAll(sel));
   document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("contact-form");
     if (!form) return;
+
+    // Allow configuration via data-attributes on the form element as an alternative
+    // to editing this file. Useful if you prefer to set values in `index.html`.
+    // Example:
+    // <form id="contact-form" data-emailjs-service="service_xxx" data-emailjs-template="template_xxx" data-emailjs-key="publicKeyHere">
+    // If present, these override the constants above.
+    const ds = form.dataset || {};
+    const resolvedService = ds.emailjsService || EMAILJS_SERVICE_ID;
+    const resolvedTemplate = ds.emailjsTemplate || EMAILJS_TEMPLATE_ID;
+    const resolvedKey = ds.emailjsKey || EMAILJS_PUBLIC_KEY;
+
+    // If we got a public key from data-attrs, attempt to initialise the SDK with it.
+    // If the SDK isn't present (blocked or not loaded), try to load it dynamically as a fallback.
+    function initEmailJsWithKey(key) {
+      try {
+        if (
+          key &&
+          key !== "YOUR_PUBLIC_KEY" &&
+          window.emailjs &&
+          typeof window.emailjs.init === "function"
+        ) {
+          emailjs.init(key);
+          console.info("EmailJS initialized with provided key.");
+        }
+      } catch (e) {
+        console.warn("EmailJS init via form dataset failed:", e);
+      }
+    }
+
+    if (!window.emailjs) {
+      // SDK not found — attempt to load it dynamically from multiple CDNs as a fallback.
+      // Some environments block a single CDN; trying alternatives increases chance of success.
+      const tryUrls = [
+        "https://cdn.emailjs.com/sdk/3.11.0/email.min.js",
+        // Alternative mirrors (version may differ; these are common public CDNs)
+        "https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js",
+        "https://unpkg.com/emailjs-com@3.2.0/dist/email.min.js",
+      ];
+      console.warn(
+        "EmailJS SDK not present. Attempting to load from CDNs:",
+        tryUrls,
+      );
+
+      // Try each URL in order until one succeeds
+      function tryLoadAtIndex(index) {
+        if (index >= tryUrls.length) {
+          console.error("Failed to load EmailJS SDK from all known CDNs.");
+          return;
+        }
+        const url = tryUrls[index];
+        const s = document.createElement("script");
+        s.src = url;
+        s.async = true;
+        s.onload = () => {
+          console.info("EmailJS SDK loaded from:", url);
+          // give the SDK a tick to initialize global
+          setTimeout(() => initEmailJsWithKey(resolvedKey), 20);
+        };
+        s.onerror = (err) => {
+          console.warn("Failed to load EmailJS SDK from", url, ":", err);
+          // try next
+          tryLoadAtIndex(index + 1);
+        };
+        document.head.appendChild(s);
+      }
+
+      tryLoadAtIndex(0);
+    } else {
+      // SDK already present
+      initEmailJsWithKey(resolvedKey);
+    }
+
+    // Debugging helper: print short status about resolved EmailJS values when page loads.
+    // NOTE: This prints to the console to help identify why the "Email sending is not configured" message appears.
+    try {
+      const short = (v) =>
+        typeof v === "string" && v.length > 12 ? v.slice(0, 8) + "…" : v;
+      console.info("EmailJS resolved config:", {
+        sdkLoaded: !!window.emailjs,
+        service: short(resolvedService),
+        template: short(resolvedTemplate),
+        hasKey: !!resolvedKey && resolvedKey !== "YOUR_PUBLIC_KEY",
+      });
+    } catch (e) {
+      /* ignore console errors */
+    }
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -252,19 +344,32 @@ const $$ = (sel) => Array.from(document.querySelectorAll(sel));
         return;
       }
 
-      // If EmailJS isn't configured, show a helpful message and bail
-      if (
-        !window.emailjs ||
-        !EMAILJS_SERVICE_ID ||
-        !EMAILJS_TEMPLATE_ID ||
-        EMAILJS_SERVICE_ID === "YOUR_SERVICE_ID" ||
-        EMAILJS_TEMPLATE_ID === "YOUR_TEMPLATE_ID"
-      ) {
-        showFormMessage(
-          form,
-          "Email sending is not configured. Please update the EmailJS service/template IDs in script.js.",
-          "error",
-        );
+      // If EmailJS isn't configured, give a specific reason and bail
+      const sdkLoaded = !!window.emailjs;
+      const serviceOk =
+        resolvedService && resolvedService !== "YOUR_SERVICE_ID";
+      const templateOk =
+        resolvedTemplate && resolvedTemplate !== "YOUR_TEMPLATE_ID";
+      if (!sdkLoaded || !serviceOk || !templateOk) {
+        // Log detailed info for debugging
+        console.warn("EmailJS send prevented, configuration issue:", {
+          sdkLoaded,
+          resolvedService,
+          resolvedTemplate,
+        });
+
+        let userMsg = "Email sending is not configured.";
+        if (!sdkLoaded)
+          userMsg =
+            "EmailJS SDK not loaded. Make sure the SDK script is included before script.js.";
+        else if (!serviceOk)
+          userMsg =
+            "EmailJS Service ID is missing or not set (update script.js or form data attributes).";
+        else if (!templateOk)
+          userMsg =
+            "EmailJS Template ID is missing or not set (update script.js or form data attributes).";
+
+        showFormMessage(form, userMsg + " Check console for details.", "error");
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.textContent = submitBtn.dataset.origText || "Send message";
@@ -272,8 +377,8 @@ const $$ = (sel) => Array.from(document.querySelectorAll(sel));
         return;
       }
 
-      // Send the form using EmailJS
-      emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form).then(
+      // Send the form using EmailJS (use resolved values which may come from the form dataset)
+      emailjs.sendForm(resolvedService, resolvedTemplate, form).then(
         (response) => {
           showFormMessage(
             form,
